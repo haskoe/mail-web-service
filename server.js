@@ -63,8 +63,8 @@ router.post('/mail', (req, res) => {
     expressSendMail(mailOptions, res)
 })
 
-app.listen(3000, () => {
-    console.log("Started on PORT 3000");
+app.listen(process.env.WEB_SERVER_PORT, () => {
+    console.log(`Started on PORT ${process.env.WEB_SERVER_PORT}`);
 })
 
 // httpie
