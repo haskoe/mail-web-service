@@ -41,7 +41,7 @@ function sendMail(transporter, mailOptions, callBack) {
 function verifyConnection(transporter, callback) {
     transporter.verify(function (error, success) {
         if (error) {
-            callBack(error)
+            callback(error)
         } else {
             callback('')
         }
