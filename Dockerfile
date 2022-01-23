@@ -3,7 +3,7 @@ FROM node:alpine As build
 WORKDIR /usr/src/app
 
 COPY ./package*.json ./
-COPY ./server.js ./
+COPY ./*js ./
 
 RUN npm install --only=production
 RUN npm install -g esbuild
