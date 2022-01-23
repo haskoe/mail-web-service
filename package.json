@@ -1,0 +1,24 @@
+{
+  "name": "mail-web-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "esbuild server.js --outfile=index.js --bundle --platform=node"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haskoe/mail-web-service.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/haskoe/mail-web-service/issues"
+  },
+  "homepage": "https://github.com/haskoe/mail-web-service#readme",
+  "dependencies": {
+    "express": "^4.17.2",
+    "nodemailer": "^6.7.2"
+  }
+}
