@@ -26,16 +26,21 @@ function createSmtpTransportFromEnv() {
 }
 
 function sendMail(transporter, mailOptions, callBack) {
-    const errMsg = ''
-    transporter.verify(function (error, success) {
-        if (error) {
-            callBack(error)
-        } else {
-            transporter.sendMail(mailOptions, function (error, info) {
+    const errMsg = validateMailOptions(mailOptions)
+    if (errMsg) {
+        callBack(errMsg)
+    }
+    else {
+        transporter.verify(function (error, success) {
+            if (error) {
                 callBack(error)
-            });
-        }
-    });
+            } else {
+                transporter.sendMail(mailOptions, function (error, info) {
+                    callBack(error)
+                });
+            }
+        });
+    }
 }
 
 function verifyConnection(transporter, callback) {
@@ -63,6 +68,9 @@ function validateMailOptions(mailOptions) {
     if (!mailRegex.test(mailOptions.to || ''))
         return 'Invalid to e-mail'
 
+    if (!(mailOptions.subject || ''))
+        return 'subject must be non-empty'
+
     if (!(mailOptions.text || mailOptions.html))
         return 'either text or html must be non-empty'
 
@@ -73,9 +81,6 @@ function validateMailOptions(mailOptions) {
 }
 
 function defaultSendMail(mailOptions, callBack) {
-    if (!validateMailOptions(mailOptions))
-        return
-
     sendMail(createSmtpTransportFromEnv(), mailOptions, callBack)
 }
 
