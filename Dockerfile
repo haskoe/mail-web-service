@@ -17,7 +17,7 @@ WORKDIR /usr/src/app
 COPY --from=build /usr/src/app/index.js ./ 
 RUN ls
 
-ENV SMTP_HOST send.one.com
+ENV SMTP_HOST ..
 ENV SMTP_PORT 465
 ENV WEB_SERVER_PORT 80
 ENV SMTP_USER user
