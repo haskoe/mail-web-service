@@ -1,3 +1,16 @@
 const mailer = require('./mailer')
 
-mailer.verifyConnection( mailer.createSmtpTransportFromEnv(), (error) => console.log(error || 'success'))
+console.log(mailer.validateMailOptions(null))
+console.log(mailer.validateMailOptions(''))
+console.log(mailer.validateMailOptions(1))
+console.log(mailer.validateMailOptions({}))
+console.log(mailer.validateMailOptions({ from: 'a', to: 'a@b.cd' }))
+console.log(mailer.validateMailOptions({ from: 'a@b', to: 'a@b.cd' }))
+console.log(mailer.validateMailOptions({ from: 'a@b.cd', to1: 'a@b.cd' }))
+console.log(mailer.validateMailOptions({ from: 'a@b.cd', to: 'a@b.' }))
+console.log(mailer.validateMailOptions({ from: 'a@b.cd', to: 'a@b.cd' }))
+console.log(mailer.validateMailOptions({ from: 'a@b.cd', to: 'a@b.cd', text: '' }))
+console.log(mailer.validateMailOptions({ from: 'a@b.cd', to: 'a@b.cd', text: '', html: '' }))
+console.log(mailer.validateMailOptions({ from: 'a@b.cd', to: 'a@b.cd', text: 'a'.repeat(1000), html: '' }))
+
+mailer.verifyConnection(mailer.createSmtpTransportFromEnv(), (error) => console.log(error || 'success'))

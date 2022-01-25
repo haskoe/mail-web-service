@@ -48,11 +48,39 @@ function verifyConnection(transporter, callback) {
     })
 }
 
+function isDict(v) {
+    return typeof v === 'object' && v !== null && !(v instanceof Array) && !(v instanceof Date);
+}
+
+const mailRegex = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}')
+function validateMailOptions(mailOptions) {
+    if (!isDict(mailOptions))
+        return 'invalid mailOptions object'
+
+    if (!mailRegex.test(mailOptions.from || ''))
+        return 'Invalid from e-mail'
+
+    if (!mailRegex.test(mailOptions.to || ''))
+        return 'Invalid to e-mail'
+
+    if (!(mailOptions.text || mailOptions.html))
+        return 'either text or html must be non-empty'
+
+    if ((mailOptions.text || mailOptions.html).length >= 1000)
+        return 'text/html length must be less than 1000'
+
+    return ''
+}
+
 function defaultSendMail(mailOptions, callBack) {
+    if (!validateMailOptions(mailOptions))
+        return
+
     sendMail(createSmtpTransportFromEnv(), mailOptions, callBack)
 }
 
 module.exports = {
+    validateMailOptions: validateMailOptions,
     createSmtpTransport: createSmtpTransport,
     createSmtpTransportFromEnv: createSmtpTransportFromEnv,
     verifyConnection: verifyConnection,

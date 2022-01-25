@@ -7,9 +7,15 @@ function expressSendMailDefault(mailOptions, response) {
 }
 
 function expressSendMail(transporter, mailOptions, response) {
-    mailer.SendMail( transporter, mailOptions, function (errMsg) {
-        response.end(errMsg || '')
-    });
+    const validateMsg = validateMailOptions(mailOptions)
+    if (validateMsg) {
+        response.end(validateMsg)
+    }
+    else {
+        mailer.SendMail(transporter, mailOptions, function (errMsg) {
+            response.end(errMsg || '')
+        });
+    }
 }
 
 module.exports = {
