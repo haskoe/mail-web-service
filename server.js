@@ -1,6 +1,7 @@
 const expressServer = require('./express-server')
 const expressMailer = require('./express-mailer')
 const mailer = require('./mailer')
+const { logger } = require('./logging')
 
 function createRoutes(router) {
     router.post('/mail', (req, res) => {
