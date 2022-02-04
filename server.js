@@ -14,6 +14,7 @@ function createRoutes(router) {
         expressMailer.expressSendMailDefault(mailOptions, res)
     })
 
+    router.get('/alive', (req, res) => { res.end('alive') })
 }
 
 mailer.verifyConnection(mailer.createSmtpTransportFromEnv(), function (error) {
