@@ -1,15 +1,15 @@
 const nodemailer = require('nodemailer')
-require('dotenv').config()
 
 const MAX_BODY_LENGTH = 50000
 
 function smtpOptionsFromEnv() {
-    return {
+    const options =  {
         host: process.env.SMTP_HOST,
         port: process.env.SMTP_PORT,
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PWD
     }
+    return options
 }
 
 function createSmtpTransport(smtpOptions) {

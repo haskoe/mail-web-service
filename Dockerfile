@@ -18,7 +18,7 @@ ENV NODE_ENV production
 
 WORKDIR /usr/src/app
 
-COPY --from=build /usr/src/app/index.js ./ 
+COPY --chown=node:node --from=build /usr/src/app/index.js ./ 
 
 ENV SMTP_HOST ..
 ENV SMTP_PORT 465
