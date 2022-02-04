@@ -1,6 +1,8 @@
 const nodemailer = require('nodemailer')
 require('dotenv').config()
 
+const MAX_BODY_LENGTH = 50000
+
 function smtpOptionsFromEnv() {
     return {
         host: process.env.SMTP_HOST,
@@ -74,8 +76,8 @@ function validateMailOptions(mailOptions) {
     if (!(mailOptions.text || mailOptions.html))
         return 'either text or html must be non-empty'
 
-    if ((mailOptions.text || mailOptions.html).length >= 1000)
-        return 'text/html length must be less than 1000'
+    if ((mailOptions.text || mailOptions.html).length >= MAX_BODY_LENGTH)
+        return `mail body size must be less than {MAX_BODY_LENGTH}`
 
     return ''
 }
