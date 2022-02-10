@@ -3,7 +3,7 @@ const nodemailer = require('nodemailer')
 const MAX_BODY_LENGTH = 50000
 
 function smtpOptionsFromEnv() {
-    const options =  {
+    const options = {
         host: process.env.SMTP_HOST,
         port: process.env.SMTP_PORT,
         user: process.env.SMTP_USER,
@@ -27,6 +27,13 @@ function createSmtpTransportFromEnv() {
     return createSmtpTransport(smtpOptionsFromEnv())
 }
 
+function nodeMailerErrorToString(err) {
+    if (typeof err === 'object' && err !== null) {
+        return JSON.stringify(err)
+    }
+    return err
+}
+
 function sendMail(transporter, mailOptions, callBack) {
     const errMsg = validateMailOptions(mailOptions)
     if (errMsg) {
@@ -35,10 +42,10 @@ function sendMail(transporter, mailOptions, callBack) {
     else {
         transporter.verify(function (error, success) {
             if (error) {
-                callBack(error)
+                callBack(nodeMailerErrorToString(error))
             } else {
                 transporter.sendMail(mailOptions, function (error, info) {
-                    callBack(error)
+                    callBack(nodeMailerErrorToString(error))
                 });
             }
         });
@@ -48,7 +55,7 @@ function sendMail(transporter, mailOptions, callBack) {
 function verifyConnection(transporter, callback) {
     transporter.verify(function (error, success) {
         if (error) {
-            callback(error)
+            callback(nodeMailerErrorToString(error))
         } else {
             callback('')
         }

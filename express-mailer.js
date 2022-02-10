@@ -2,7 +2,7 @@ const mailer = require('./mailer')
 
 function expressSendMailDefault(mailOptions, response) {
     mailer.defaultSendMail(mailOptions, function (errMsg) {
-        console.log(errMsg || 'mail sent')
+        console.log(new Date().toISOString(), errMsg || 'mail sent')
         response.end(errMsg || '')
     });
 }
