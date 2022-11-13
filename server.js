@@ -3,7 +3,7 @@ const expressMailer = require('./express-mailer')
 const mailer = require('./mailer')
 
 function createRoutes(router) {
-    router.post('/mail', (req, res) => {
+    router.post('/mail', (req, res, next) => {
         const mailOptions = {
             from: req.body.from,
             to: req.body.to,
@@ -11,7 +11,7 @@ function createRoutes(router) {
             text: req.body.text || '',
             html: req.body.html || ''
         }
-        expressMailer.expressSendMailDefault(mailOptions, res)
+        expressMailer.expressSendMailDefault(mailOptions, res, next)
     })
 
     router.get('/alive', (req, res) => { res.end('alive') })

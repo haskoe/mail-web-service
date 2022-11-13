@@ -1,6 +1,6 @@
 const mailer = require('./mailer')
 
-function expressSendMailDefault(mailOptions, response) {
+function expressSendMailDefault(mailOptions, response, next) {
     mailer.defaultSendMail(mailOptions, function (errMsg) {
         console.log(new Date().toISOString(), errMsg || 'mail sent')
         response.end(errMsg || '')
